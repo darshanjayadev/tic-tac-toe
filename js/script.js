@@ -1,4 +1,6 @@
-
+// ------------------------
+// LOGIC
+// ------------------------
 
 const Board = (() => {
   let cells = new Array(9).fill(" ");
@@ -17,7 +19,19 @@ const Board = (() => {
 
 })();
 
-const DisplayController = (() => {
+// const Game = (() => {
+//   // update cells from input
+//   Board.fillCell()
+//   // swap current player
+//   // checks for winning
+//   // checks for draw
+// })();
+
+// ------------------------
+// DOM
+// ------------------------
+
+const DOMController = (() => {
   const updateCell = (cellId, playerSymbol) => {
     const cell = document.getElementById(cellId);
     cell.innerHTML = playerSymbol;
@@ -28,40 +42,37 @@ const DisplayController = (() => {
     messageBox.style.display = "block";
     messageBox.className = className;
     messageBox.innerHTML = message;
+    window.setTimeout(()=>messageBox.style.display = "none", 4000,);
   }
 
-  return {updateCell, showMessage}
+  const addClickListenerToCells = () => {
+    const allCells = document.querySelectorAll(".cell");
+    
+    console.log(allCells);
+    
+    allCells.forEach(function(cell) {
+      cell.addEventListener("click", function() {
+        const cellNumber = parseInt(this.id.replace('cell-', ''));
+    
+        if (Board.isCellTaken(cellNumber)){
+          showMessage('Cell is already taken', 'danger');
+        } else {
+          Board.fillCell(cellNumber, 'X');
+          updateCell(this.id, 'X');
+        }
+      });
+    });
+  }
+
+  return {showMessage, addClickListenerToCells}
 })();
 
-// const Game = (() => {
-//   // update cells from input
-//   Board.fillCell()
-//   // swap current player
-//   // checks for winning
-//   // checks for draw
-// })();
+// ------------------------
+// Tic-Tac-Toe
+// ------------------------
 
+function main() {
+  DOMController.addClickListenerToCells();
+}
 
-let allCells = document.querySelectorAll(".cell");
-
-console.log(allCells)
-
-allCells.forEach(function(cell) {
-  cell.addEventListener("click", function() {
-
-    const cellNumber = parseInt(this.id.replace('cell-', ''));
-
-    if (Board.isCellTaken(cellNumber) == true){
-      DisplayController.showMessage('Cell is already taken', 'danger');
-    }else {
-      Board.fillCell(cellNumber, 'X');
-      DisplayController.updateCell(this.id, 'X');
-    }
-
-  });
-});
-
-
-
-
-
+main()
