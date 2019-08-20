@@ -13,11 +13,11 @@ const Board = (() => {
     return cells[cellNumber] != " ";
   }
 
-  const resetBoard = () => {
-    this.cells = new Array(9).fill(" ");
-  }
+  // const resetBoard = () => {
+  //   cells = new Array(9).fill(" ");
+  // }
 
-  return {cells, fillCell, isCellTaken, resetBoard}
+  return {cells, fillCell, isCellTaken}
 
 })();
 
@@ -110,20 +110,22 @@ const DOMController = (() => {
     cell.innerHTML = playerSymbol;
   }
 
-  const resetCells = () => {
-    const allCells = document.querySelectorAll(".cell");
+  // const resetCells = () => {
+  //   const allCells = document.querySelectorAll(".cell");
 
-    allCells.forEach(function(cell) {
-      cell.innerHTML = " ";
-    });
-  }
+  //   allCells.forEach(function(cell) {
+  //     cell.innerHTML = " ";
+  //   });
+  // }
 
   const showMessage = (message, className) => {
     const messageBox = document.getElementById("message");
     messageBox.style.display = "block";
     messageBox.className = className;
     messageBox.innerHTML = message;
-    window.setTimeout(()=>messageBox.style.display = "none", 4000);
+    if(className=="danger"){
+      window.setTimeout(()=>messageBox.style.display = "none", 4000);
+    }
   }
 
   const addClickListenerToCells = () => {
@@ -145,7 +147,7 @@ const DOMController = (() => {
       Game.updateState(cellNumber);
       updateCell(this.id, Game.currentPlayer.symbol);
       if (Game.isWin()) {
-        showMessage(Game.currentPlayer.name + ' Wins', 'success');
+        showMessage((Game.currentPlayer.name || Game.currentPlayer.symbol) + ' Wins', 'success');
         removeClickListenerToCells();
       } else if (Game.isDraw()) {
         showMessage('Draw', 'success')
@@ -165,22 +167,24 @@ const DOMController = (() => {
     const playerNamesForm = document.getElementById("player-names-form");
 
     playerNamesForm.innerHTML = `
-      <div class="name">
-        <p>${firstPlayer.name}</p>
-        <p class="symbol"> ${firstPlayer.symbol} </p>
-      </div>
+      <div class="names">
+        <div class="name">
+          <p>${firstPlayer.name}</p>
+          <p class="symbol"> ${firstPlayer.symbol} </p>
+        </div>
 
-      <span> VS </span>
+        <span> VS </span>
 
-      <div class="name">
-        <p>${secondPlayer.name}</p>
-        <p class="symbol"> ${secondPlayer.symbol} </p>
+        <div class="name">
+          <p>${secondPlayer.name}</p>
+          <p class="symbol"> ${secondPlayer.symbol} </p>
+        </div>
       </div>
     `;
 
   }
 
-  return {showMessage, addClickListenerToCells, replaceFormWithNames, resetCells}
+  return {showMessage, addClickListenerToCells, replaceFormWithNames}
 })();
 
 // ------------------------
@@ -190,9 +194,10 @@ const DOMController = (() => {
 function main() {
   const resetButton = document.getElementById("reset-button");
   resetButton.addEventListener('click', () => {
-    Board.resetBoard();
-    DOMController.resetCells();
-    DOMController.addClickListenerToCells();
+    // Board.resetBoard();
+    // DOMController.resetCells();
+    // DOMController.addClickListenerToCells();
+    window.location.reload();
   });
 }
 
