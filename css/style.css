@@ -11,7 +11,7 @@ main {
 /* Header */
 .header {
   text-align: center;
-  font-family: 'Luckiest Guy', cursive;
+  font-family: 'Lilita One', cursive;
   color: #EDF5E1;
 }
 .header h3 {
@@ -33,7 +33,7 @@ main {
 
 #message {
   display: none;
-  font-family: 'Luckiest Guy', cursive;
+    font-family: 'Lilita One', cursive;
   font-size: 2rem;
   text-align: center;
   padding: 1rem;
@@ -42,7 +42,7 @@ main {
 .names {
   display: flex;
   justify-content: space-around;
-  font-family: 'Luckiest Guy', cursive;
+    font-family: 'Lilita One', cursive;
   font-size: 2rem;
   text-align: center;
 }
@@ -105,7 +105,7 @@ form > * {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Luckiest Guy', cursive;
+  font-family: 'Lilita One', cursive;
   color: #EDF5E1;
 }
 
@@ -114,9 +114,6 @@ form > * {
 }
 
 /* btns */
-.button-border {
-  /* padding: 10px; */
-}
 
 .btn {
   background-color: #05386B;
@@ -125,7 +122,7 @@ form > * {
   outline: none;
   padding: 12px 40px 10px;
   position: relative;
-  font-family: 'Luckiest Guy', cursive;
+    font-family: 'Lilita One', cursive;
 }
 .btn:before,
 .btn:after {
