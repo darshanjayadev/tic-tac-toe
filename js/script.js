@@ -85,8 +85,8 @@ const Game = (() => {
     event.preventDefault();
     DOMController.addClickListenerToCells();
 
-    firstPlayerName = document.getElementById("fplayer").value;
-    secondPlayerName = document.getElementById("splayer").value;
+    const firstPlayerName = document.getElementById("fplayer").value;
+    const secondPlayerName = document.getElementById("splayer").value;
 
     playerX = Player(firstPlayerName, "X");
     playerO = Player(secondPlayerName, "O");
