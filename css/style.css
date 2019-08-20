@@ -26,9 +26,25 @@ main {
 .danger { 
   color: red;
 }
+.success {
+  color: #E8D372;
+  text-shadow: #FFF 0px 0px 5px, #FFF 0px 0px 10px, #FFF 0px 0px 15px, #E8D372 0px 0px 20px, #E8D372 0px 0px 30px, #E8D372 0px 0px 40px, #E8D372 0px 0px 50px, #E8D372 0px 0px 75px;
+}
 
 #message {
   display: none;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 2rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.names {
+  display: flex;
+  justify-content: space-around;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 2rem;
+  text-align: center;
 }
 
 /* Form */
@@ -43,12 +59,25 @@ main {
   color: #379683;
 }
 
+.player-names {
+  margin: 2rem 0;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  margin: 5rem 0;
+}
+form > * {
+  margin: 0 1rem;
+}
 
 /* Game Board */
 
 .game-board {
   margin: 20px auto;
   width: 70%;
+  /* background-color: #ffffff; */
 }
 
 .row { 
@@ -56,6 +85,10 @@ main {
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  border-bottom: solid 2px #05386B;
+}
+.row:last-child {
+  border-bottom: none;
 }
 
 .column {
@@ -65,15 +98,24 @@ main {
 }
 
 .cell {
-  padding-top: 33%;
-  border: solid 1px black;
+  height: 150px;
+  border-right: solid 2px #05386B;
   cursor: pointer;
+  font-size: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Luckiest Guy', cursive;
+  color: #EDF5E1;
+}
+
+.cell:last-child {
+  border-right: none;
 }
 
 /* btns */
 .button-border {
-  padding: 20px;
-  margin: 0 auto;
+  /* padding: 10px; */
 }
 
 .btn {
@@ -83,6 +125,7 @@ main {
   outline: none;
   padding: 12px 40px 10px;
   position: relative;
+  font-family: 'Luckiest Guy', cursive;
 }
 .btn:before,
 .btn:after {
@@ -110,6 +153,11 @@ main {
 .btn:hover:after {
   height: 100%;
   width: 100%;
+}
+
+.restart {
+  text-align: center;
+  margin: 3rem 0;
 }
 
 
