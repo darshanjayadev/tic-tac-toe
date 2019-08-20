@@ -38,7 +38,6 @@ const Game = (() => {
     } else {
       this.currentPlayer = playerX;
     }
-    console.log(this.currentPlayer)
   }
 
   // checks for winning
@@ -130,8 +129,6 @@ const DOMController = (() => {
 
   const addClickListenerToCells = () => {
     const allCells = document.querySelectorAll(".cell");
-    
-    console.log(allCells);
     
     allCells.forEach(function(cell) {
       cell.addEventListener("click", clickHandler);
