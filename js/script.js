@@ -131,7 +131,8 @@ const DOMController = (() => {
         showMessage((Game.currentPlayer.name || Game.currentPlayer.symbol) + ' Wins', 'success');
         removeClickListenerToCells();
       } else if (Game.isDraw()) {
-        showMessage('Draw', 'success')
+        showMessage('Draw', 'success');
+        removeClickListenerToCells();
       }
       Game.playerSwap();
     }
