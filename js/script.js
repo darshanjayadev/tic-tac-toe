@@ -13,16 +13,12 @@ const Board = (() => {
     return cells[cellNumber] != " ";
   }
 
-  // const resetBoard = () => {
-  //   cells = new Array(9).fill(" ");
-  // }
-
-  return {cells, fillCell, isCellTaken}
+  return { cells, fillCell, isCellTaken }
 
 })();
 
-const Player = function(name, symbol) {
-  return {name, symbol}
+const Player = function (name, symbol) {
+  return { name, symbol }
 }
 
 const Game = (() => {
@@ -31,36 +27,34 @@ const Game = (() => {
   let playerO = Player("", "O");
   let currentPlayer = playerX;
 
-  // swap current player
-  const playerSwap = function() {
-    if(this.currentPlayer == playerX) {
+  const playerSwap = function () {
+    if (this.currentPlayer == playerX) {
       this.currentPlayer = playerO;
     } else {
       this.currentPlayer = playerX;
     }
   }
 
-  // checks for winning
-  const isWin = function() {
+  const isWin = function () {
     return checkHorizontal() || checkVertical() || checkDiagonal();
   }
-  const checkHorizontal = function() {
-    for(let i = 0; i< Board.cells.length; i+=3) {
-      if (Board.cells[i] == Board.cells[i+1] && Board.cells[i] == Board.cells[i+2] && Board.cells[i] != " ") {
+  const checkHorizontal = function () {
+    for (let i = 0; i < Board.cells.length; i += 3) {
+      if (Board.cells[i] == Board.cells[i + 1] && Board.cells[i] == Board.cells[i + 2] && Board.cells[i] != " ") {
         return true;
       }
     }
     return false;
   }
-  const checkVertical = function() {
-    for(let i = 0; i < 3; i++) {
-      if (Board.cells[i] == Board.cells[i+3] && Board.cells[i] == Board.cells[i+6] && Board.cells[i] != " ") {
+  const checkVertical = function () {
+    for (let i = 0; i < 3; i++) {
+      if (Board.cells[i] == Board.cells[i + 3] && Board.cells[i] == Board.cells[i + 6] && Board.cells[i] != " ") {
         return true;
       }
     }
     return false;
   }
-  const checkDiagonal = function() {
+  const checkDiagonal = function () {
     if (Board.cells[4] == " ") {
       return false
     } else if ((Board.cells[4] == Board.cells[0] && Board.cells[4] == Board.cells[8]) || (Board.cells[4] == Board.cells[2] && Board.cells[4] == Board.cells[6])) {
@@ -69,19 +63,17 @@ const Game = (() => {
     return false;
   }
 
-  // checks for draw
-  const isDraw = function() {
+  const isDraw = function () {
     return moves == 9;
   }
 
-  // update cells from input
-  const updateState = function(cellNumber) {
+  const updateState = function (cellNumber) {
     Board.fillCell(cellNumber, this.currentPlayer.symbol);
     moves++;
   }
 
 
-  const start = function() {
+  const start = function () {
     event.preventDefault();
     DOMController.addClickListenerToCells();
 
@@ -95,7 +87,7 @@ const Game = (() => {
     DOMController.replaceFormWithNames(playerX, playerO);
   }
 
-  return {updateState, currentPlayer, isWin, isDraw, playerSwap, start}
+  return { updateState, currentPlayer, isWin, isDraw, playerSwap, start }
 })();
 
 
@@ -109,36 +101,28 @@ const DOMController = (() => {
     cell.innerHTML = playerSymbol;
   }
 
-  // const resetCells = () => {
-  //   const allCells = document.querySelectorAll(".cell");
-
-  //   allCells.forEach(function(cell) {
-  //     cell.innerHTML = " ";
-  //   });
-  // }
-
   const showMessage = (message, className) => {
     const messageBox = document.getElementById("message");
     messageBox.style.display = "block";
     messageBox.className = className;
     messageBox.innerHTML = message;
-    if(className=="danger"){
-      window.setTimeout(()=>messageBox.style.display = "none", 4000);
+    if (className == "danger") {
+      window.setTimeout(() => messageBox.style.display = "none", 4000);
     }
   }
 
   const addClickListenerToCells = () => {
     const allCells = document.querySelectorAll(".cell");
-    
-    allCells.forEach(function(cell) {
+
+    allCells.forEach(function (cell) {
       cell.addEventListener("click", clickHandler);
     });
   }
 
-  const clickHandler = function() {
+  const clickHandler = function () {
     const cellNumber = parseInt(this.id.replace('cell-', ''));
 
-    if (Board.isCellTaken(cellNumber)){
+    if (Board.isCellTaken(cellNumber)) {
       showMessage('Cell is already taken', 'danger');
     } else {
       Game.updateState(cellNumber);
@@ -155,7 +139,7 @@ const DOMController = (() => {
 
   const removeClickListenerToCells = () => {
     const allCells = document.querySelectorAll(".cell");
-    allCells.forEach(function(cell) {
+    allCells.forEach(function (cell) {
       cell.removeEventListener("click", clickHandler);
     });
   }
@@ -181,7 +165,7 @@ const DOMController = (() => {
 
   }
 
-  return {showMessage, addClickListenerToCells, replaceFormWithNames}
+  return { showMessage, addClickListenerToCells, replaceFormWithNames }
 })();
 
 // ------------------------
@@ -191,9 +175,6 @@ const DOMController = (() => {
 function main() {
   const resetButton = document.getElementById("reset-button");
   resetButton.addEventListener('click', () => {
-    // Board.resetBoard();
-    // DOMController.resetCells();
-    // DOMController.addClickListenerToCells();
     window.location.reload();
   });
 }
