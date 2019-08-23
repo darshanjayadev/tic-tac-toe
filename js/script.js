@@ -27,18 +27,19 @@ const Game = (() => {
   let playerO = Player("", "O");
   let currentPlayer = playerX;
 
-  const playerSwap = function () {
-    if (this.currentPlayer == playerX) {
-      this.currentPlayer = playerO;
+  const playerSwap = () => {
+    if (Game.currentPlayer == playerX) {
+      Game.currentPlayer = playerO;
     } else {
-      this.currentPlayer = playerX;
+      Game.currentPlayer = playerX;
     }
   }
 
-  const isWin = function () {
+  const isWin = () => {
     return checkHorizontal() || checkVertical() || checkDiagonal();
   }
-  const checkHorizontal = function () {
+
+  const checkHorizontal = () => {
     for (let i = 0; i < Board.cells.length; i += 3) {
       if (Board.cells[i] == Board.cells[i + 1] && Board.cells[i] == Board.cells[i + 2] && Board.cells[i] != " ") {
         return true;
@@ -46,7 +47,8 @@ const Game = (() => {
     }
     return false;
   }
-  const checkVertical = function () {
+
+  const checkVertical = () => {
     for (let i = 0; i < 3; i++) {
       if (Board.cells[i] == Board.cells[i + 3] && Board.cells[i] == Board.cells[i + 6] && Board.cells[i] != " ") {
         return true;
@@ -54,7 +56,8 @@ const Game = (() => {
     }
     return false;
   }
-  const checkDiagonal = function () {
+
+  const checkDiagonal = () => {
     if (Board.cells[4] == " ") {
       return false
     } else if ((Board.cells[4] == Board.cells[0] && Board.cells[4] == Board.cells[8]) || (Board.cells[4] == Board.cells[2] && Board.cells[4] == Board.cells[6])) {
@@ -63,17 +66,16 @@ const Game = (() => {
     return false;
   }
 
-  const isDraw = function () {
+  const isDraw = () => {
     return moves == 9;
   }
 
-  const updateState = function (cellNumber) {
-    Board.fillCell(cellNumber, this.currentPlayer.symbol);
+  const updateState = (cellNumber) => {
+    Board.fillCell(cellNumber, Game.currentPlayer.symbol);
     moves++;
   }
 
-
-  const start = function () {
+  const start = () => {
     event.preventDefault();
     DOMController.addClickListenerToCells();
 
@@ -82,7 +84,7 @@ const Game = (() => {
 
     playerX = Player(firstPlayerName, "X");
     playerO = Player(secondPlayerName, "O");
-    this.currentPlayer = playerX;
+    Game.currentPlayer = playerX;
 
     DOMController.replaceFormWithNames(playerX, playerO);
   }
