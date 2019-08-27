@@ -13,12 +13,19 @@ const Board = (() => {
     return cells[cellNumber] != " ";
   }
 
+  // const resetBoard = () => {
+  //   cells = new Array(9).fill(" ");
+  // }
+
   return { cells, fillCell, isCellTaken }
 
 })();
 
-const Player = function (name, symbol) {
-  return { name, symbol }
+const Player = function (name, symbol, score = 0) {
+  const getScore = () => score;
+  const increaseScore = () => score++;
+
+  return { name, symbol, getScore, increaseScore }
 }
 
 const Game = (() => {
@@ -26,6 +33,8 @@ const Game = (() => {
   let playerX = Player("", "X");
   let playerO = Player("", "O");
   let currentPlayer = playerX;
+
+  const getMoves = () => moves;
 
   const playerSwap = () => {
     if (Game.currentPlayer == playerX) {
@@ -89,7 +98,7 @@ const Game = (() => {
     DOMController.replaceFormWithNames(playerX, playerO);
   }
 
-  return { updateState, currentPlayer, isWin, isDraw, playerSwap, start }
+  return { updateState, currentPlayer, isWin, isDraw, playerSwap, start, getMoves }
 })();
 
 
@@ -121,6 +130,23 @@ const DOMController = (() => {
     });
   }
 
+  const updateScores = () => {
+    const scores = document.getElementsByClassName("score");
+    if (Game.currentPlayer.symbol == 'X') {
+      scores[0].innerHTML = Game.currentPlayer.getScore();
+    }else {
+      scores[1].innerHTML = Game.currentPlayer.getScore();
+    }
+  }
+
+  // const resetCells = () => {
+  //   const allCells = document.querySelectorAll(".cell");
+
+  //   allCells.forEach(function(cell) {
+  //     cell.innerHTML = " ";
+  //   });
+  // }
+
   const clickHandler = function () {
     const cellNumber = parseInt(this.id.replace('cell-', ''));
 
@@ -131,6 +157,8 @@ const DOMController = (() => {
       updateCell(this.id, Game.currentPlayer.symbol);
       if (Game.isWin()) {
         showMessage((Game.currentPlayer.name || Game.currentPlayer.symbol) + ' Wins', 'success');
+        Game.currentPlayer.increaseScore();
+        updateScores();
         removeClickListenerToCells();
       } else if (Game.isDraw()) {
         showMessage('Draw', 'success');
@@ -154,14 +182,14 @@ const DOMController = (() => {
       <div class="names">
         <div class="name">
           <p>${firstPlayer.name}</p>
-          <p class="symbol"> ${firstPlayer.symbol} </p>
+          <p class="symbol">${firstPlayer.symbol}</p>
+          <p class="score">${firstPlayer.getScore()}</p>
         </div>
-
         <span> VS </span>
-
         <div class="name">
           <p>${secondPlayer.name}</p>
           <p class="symbol"> ${secondPlayer.symbol} </p>
+          <p class="score">${secondPlayer.getScore()}</p>
         </div>
       </div>
     `;
@@ -178,6 +206,9 @@ const DOMController = (() => {
 function main() {
   const resetButton = document.getElementById("reset-button");
   resetButton.addEventListener('click', () => {
+    // Board.resetBoard();
+    // DOMController.resetCells();
+    // DOMController.addClickListenerToCells();
     window.location.reload();
   });
 }
