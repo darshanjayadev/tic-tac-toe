@@ -70,7 +70,8 @@ const Game = (() => {
   const checkDiagonal = () => {
     if (Board.cells[4] == " ") {
       return false
-    } else if ((Board.cells[4] == Board.cells[0] && Board.cells[4] == Board.cells[8]) || (Board.cells[4] == Board.cells[2] && Board.cells[4] == Board.cells[6])) {
+    } else if ((Board.cells[4] == Board.cells[0] && Board.cells[4] == Board.cells[8]) || 
+               (Board.cells[4] == Board.cells[2] && Board.cells[4] == Board.cells[6])) {
       return true;
     }
     return false;
@@ -142,10 +143,7 @@ const DOMController = (() => {
 
   const resetCells = () => {
     const allCells = document.querySelectorAll(".cell");
-
-    allCells.forEach(function(cell) {
-      cell.innerHTML = " ";
-    });
+    allCells.forEach((cell) => cell.innerHTML = " ");
   }
 
   const clickHandler = function () {
@@ -218,7 +216,6 @@ function main() {
     DOMController.resetCells();
     DOMController.addClickListenerToCells();
     DOMController.hideMessages();
-    //window.location.reload();
   });
 }
 
