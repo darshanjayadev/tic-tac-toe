@@ -13,11 +13,11 @@ const Board = (() => {
     return cells[cellNumber] != " ";
   }
 
-  // const resetBoard = () => {
-  //   cells = new Array(9).fill(" ");
-  // }
+  const resetBoard = () => {
+    cells.forEach((element, index) => cells[index] = " ");
+  }
 
-  return { cells, fillCell, isCellTaken }
+  return { cells, fillCell, isCellTaken, resetBoard }
 
 })();
 
@@ -35,6 +35,7 @@ const Game = (() => {
   let currentPlayer = playerX;
 
   const getMoves = () => moves;
+  const resetMoves = () => moves = 0;
 
   const playerSwap = () => {
     if (Game.currentPlayer == playerX) {
@@ -98,7 +99,7 @@ const Game = (() => {
     DOMController.replaceFormWithNames(playerX, playerO);
   }
 
-  return { updateState, currentPlayer, isWin, isDraw, playerSwap, start, getMoves }
+  return { updateState, currentPlayer, isWin, isDraw, playerSwap, start, getMoves, resetMoves }
 })();
 
 
@@ -139,13 +140,13 @@ const DOMController = (() => {
     }
   }
 
-  // const resetCells = () => {
-  //   const allCells = document.querySelectorAll(".cell");
+  const resetCells = () => {
+    const allCells = document.querySelectorAll(".cell");
 
-  //   allCells.forEach(function(cell) {
-  //     cell.innerHTML = " ";
-  //   });
-  // }
+    allCells.forEach(function(cell) {
+      cell.innerHTML = " ";
+    });
+  }
 
   const clickHandler = function () {
     const cellNumber = parseInt(this.id.replace('cell-', ''));
@@ -158,10 +159,12 @@ const DOMController = (() => {
       if (Game.isWin()) {
         showMessage((Game.currentPlayer.name || Game.currentPlayer.symbol) + ' Wins', 'success');
         Game.currentPlayer.increaseScore();
+        Game.resetMoves();
         updateScores();
         removeClickListenerToCells();
       } else if (Game.isDraw()) {
         showMessage('Draw', 'success');
+        Game.resetMoves();
         removeClickListenerToCells();
       }
       Game.playerSwap();
@@ -196,7 +199,12 @@ const DOMController = (() => {
 
   }
 
-  return { showMessage, addClickListenerToCells, replaceFormWithNames }
+  const hideMessages = () => {
+    const messageDiv = document.getElementById("message")
+    messageDiv.style.display = "none";
+  }
+
+  return { showMessage, addClickListenerToCells, replaceFormWithNames, resetCells, hideMessages }
 })();
 
 // ------------------------
@@ -206,10 +214,11 @@ const DOMController = (() => {
 function main() {
   const resetButton = document.getElementById("reset-button");
   resetButton.addEventListener('click', () => {
-    // Board.resetBoard();
-    // DOMController.resetCells();
-    // DOMController.addClickListenerToCells();
-    window.location.reload();
+    Board.resetBoard();
+    DOMController.resetCells();
+    DOMController.addClickListenerToCells();
+    DOMController.hideMessages();
+    //window.location.reload();
   });
 }
 
