@@ -51,7 +51,7 @@ const Game = (() => {
 
   const checkHorizontal = () => {
     for (let i = 0; i < Board.cells.length; i += 3) {
-      if (Board.cells[i] == Board.cells[i + 1] && Board.cells[i] == Board.cells[i + 2] && Board.cells[i] != " ") {
+      if (Board.cells[i] === Board.cells[i + 1] && Board.cells[i] === Board.cells[i + 2] && Board.cells[i] !== " ") {
         return true;
       }
     }
@@ -60,7 +60,7 @@ const Game = (() => {
 
   const checkVertical = () => {
     for (let i = 0; i < 3; i++) {
-      if (Board.cells[i] == Board.cells[i + 3] && Board.cells[i] == Board.cells[i + 6] && Board.cells[i] != " ") {
+      if (Board.cells[i] == Board.cells[i + 3] && Board.cells[i] === Board.cells[i + 6] && Board.cells[i] !== " ") {
         return true;
       }
     }
@@ -70,8 +70,8 @@ const Game = (() => {
   const checkDiagonal = () => {
     if (Board.cells[4] == " ") {
       return false
-    } else if ((Board.cells[4] == Board.cells[0] && Board.cells[4] == Board.cells[8]) || 
-               (Board.cells[4] == Board.cells[2] && Board.cells[4] == Board.cells[6])) {
+    } else if ((Board.cells[4] === Board.cells[0] && Board.cells[4] === Board.cells[8]) || 
+               (Board.cells[4] === Board.cells[2] && Board.cells[4] === Board.cells[6])) {
       return true;
     }
     return false;
@@ -194,7 +194,6 @@ const DOMController = (() => {
         </div>
       </div>
     `;
-
   }
 
   const hideMessages = () => {
