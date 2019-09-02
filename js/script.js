@@ -212,6 +212,7 @@ function main() {
   const resetButton = document.getElementById("reset-button");
   resetButton.addEventListener('click', () => {
     Board.resetBoard();
+    Game.resetMoves();
     DOMController.resetCells();
     DOMController.addClickListenerToCells();
     DOMController.hideMessages();
