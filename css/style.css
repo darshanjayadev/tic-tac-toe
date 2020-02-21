@@ -67,8 +67,6 @@ h1 {
   margin-left: 10px;
 }
 
-/* btns */
-
 .restart {
   text-align: center;
   margin: 3rem 0;
@@ -90,4 +88,9 @@ h1 {
 
 .btn:hover {
   background-color: #F2BB16;
+}
+
+#message {
+  margin-top: 1em;
+  font-size: 2em;
 }
