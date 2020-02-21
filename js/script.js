@@ -21,17 +21,14 @@ const Board = (() => {
 
 })();
 
-const Player = function (name, symbol, score = 0) {
-  const getScore = () => score;
-  const increaseScore = () => score++;
-
-  return { name, symbol, getScore, increaseScore }
+const Player = function (symbol) {
+  return { symbol }
 }
 
 const Game = (() => {
   let moves = 0;
-  let playerX = Player("", "X");
-  let playerO = Player("", "O");
+  let playerX = Player("X");
+  let playerO = Player("O");
   let currentPlayer = playerX;
 
   const getMoves = () => moves;
@@ -87,17 +84,11 @@ const Game = (() => {
   }
 
   const start = () => {
-    event.preventDefault();
     DOMController.addClickListenerToCells();
 
-    const firstPlayerName = document.getElementById("fplayer").value;
-    const secondPlayerName = document.getElementById("splayer").value;
-
-    playerX = Player(firstPlayerName, "X");
-    playerO = Player(secondPlayerName, "O");
+    playerX = Player("X");
+    playerO = Player("O");
     Game.currentPlayer = playerX;
-
-    DOMController.replaceFormWithNames(playerX, playerO);
   }
 
   return { updateState, currentPlayer, isWin, isDraw, playerSwap, start, getMoves, resetMoves }
@@ -132,15 +123,6 @@ const DOMController = (() => {
     });
   }
 
-  const updateScores = () => {
-    const scores = document.getElementsByClassName("score");
-    if (Game.currentPlayer.symbol == 'X') {
-      scores[0].innerHTML = Game.currentPlayer.getScore();
-    }else {
-      scores[1].innerHTML = Game.currentPlayer.getScore();
-    }
-  }
-
   const resetCells = () => {
     const allCells = document.querySelectorAll(".cell");
     allCells.forEach((cell) => cell.innerHTML = " ");
@@ -156,9 +138,7 @@ const DOMController = (() => {
       updateCell(this.id, Game.currentPlayer.symbol);
       if (Game.isWin()) {
         showMessage((Game.currentPlayer.name || Game.currentPlayer.symbol) + ' Wins', 'success');
-        Game.currentPlayer.increaseScore();
         Game.resetMoves();
-        updateScores();
         removeClickListenerToCells();
       } else if (Game.isDraw()) {
         showMessage('Draw', 'success');
@@ -176,32 +156,12 @@ const DOMController = (() => {
     });
   }
 
-  const replaceFormWithNames = (firstPlayer, secondPlayer) => {
-    const playerNamesForm = document.getElementById("player-names-form");
-
-    playerNamesForm.innerHTML = `
-      <div class="names">
-        <div class="name">
-          <p>${firstPlayer.name}</p>
-          <p class="symbol">${firstPlayer.symbol}</p>
-          <p class="score">${firstPlayer.getScore()}</p>
-        </div>
-        <span> VS </span>
-        <div class="name">
-          <p>${secondPlayer.name}</p>
-          <p class="symbol"> ${secondPlayer.symbol} </p>
-          <p class="score">${secondPlayer.getScore()}</p>
-        </div>
-      </div>
-    `;
-  }
-
   const hideMessages = () => {
     const messageDiv = document.getElementById("message")
     messageDiv.style.display = "none";
   }
 
-  return { showMessage, addClickListenerToCells, replaceFormWithNames, resetCells, hideMessages }
+  return { showMessage, addClickListenerToCells, resetCells, hideMessages }
 })();
 
 // ------------------------
@@ -210,12 +170,14 @@ const DOMController = (() => {
 
 function main() {
   const resetButton = document.getElementById("reset-button");
+  Game.start();
   resetButton.addEventListener('click', () => {
     Board.resetBoard();
     Game.resetMoves();
     DOMController.resetCells();
     DOMController.addClickListenerToCells();
     DOMController.hideMessages();
+    Game.start();
   });
 }
 
