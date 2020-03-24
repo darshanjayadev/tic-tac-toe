@@ -25,7 +25,7 @@ This project emphasizes building projects using JavaScript's Factory Functions a
 1. Clone this repository.
 
 ```bash
-git clonegit@github.com:juzQrios/tic-tac-toe.git
+git clone git@github.com:juzQrios/tic-tac-toe.git
 cd tic-tac-toe
 ```
 
