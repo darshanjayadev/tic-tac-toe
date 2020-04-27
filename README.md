@@ -65,7 +65,7 @@ This project is [MIT](./LICENSE) licensed.
 
 * Github: [@juzQrios](https://github.com/juzQrios)
 * Linkedin: [Darshan J](https://www.linkedin.com/in/jayadevdarshan/)
-* Email: <jayadev.darshan@gmail.com>
+* Email: <dj30c.1@gmail.com>
 
 #### Muhammad
 
